@@ -48,4 +48,8 @@ class SourceXero(AbstractSource):
                 TrackingCategories(),
                 Tenants(),
                 DoleadCreditNotes(), DoleadIncCreditNotes(), DoleadUkCreditNotes(), DoleadDdsCreditNotes(),
-                DoleadBankTransactions(), DoleadIncBankTransactions(), DoleadUkBankTransactions(), DoleadDdsBankTransactions()]
+                DoleadBankTransactions(), DoleadIncBankTransactions(), DoleadUkBankTransactions(), DoleadDdsBankTransactions(),
+                DoleadPayments(), DoleadDdsPayments(), DoleadIncPayments(), DoleadUkPayments(),
+                DoleadPrePayments(), DoleadDdsPrePayments(), DoleadIncPrePayments(), DoleadUkPrePayments(),
+                DoleadOverPayments(), DoleadDdsOverPayments(), DoleadIncOverPayments(), DoleadUkOverPayments(),
+                DoleadBankTransfers(), DoleadDdsBankTransfers(), DoleadIncBankTransfers(), DoleadUkBankTransfers()]

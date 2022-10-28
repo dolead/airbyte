@@ -296,6 +296,146 @@ class DoleadDdsBankTransactions(DoleadBankTransactions):
             return {"tenant_id": self.dolead_dds_id, "page": "1"}
 
 
+class DoleadPayments(XeroPaginatedData):
+    def path(self, **kwargs) -> str:
+        return "/xero/payments"
+
+    def request_body_json(self, next_page_token: Mapping[str, Any] = None, **kwargs) -> Dict:
+        if next_page_token:
+            return {"tenant_id": self.dolead_id, "page": str(next_page_token)}
+        else:
+            return {"tenant_id": self.dolead_id, "page": "1"}
+
+
+class DoleadIncPayments(DoleadPayments):
+    def request_body_json(self, next_page_token: Mapping[str, Any] = None, **kwargs) -> Dict:
+        if next_page_token:
+            return {"tenant_id": self.dolead_inc_id, "page": str(next_page_token)}
+        else:
+            return {"tenant_id": self.dolead_inc_id, "page": "1"}
+
+
+class DoleadUkPayments(DoleadPayments):
+    def request_body_json(self, next_page_token: Mapping[str, Any] = None, **kwargs) -> Dict:
+        if next_page_token:
+            return {"tenant_id": self.dolead_uk_id, "page": str(next_page_token)}
+        else:
+            return {"tenant_id": self.dolead_uk_id, "page": "1"}
+
+
+class DoleadDdsPayments(DoleadPayments):
+    def request_body_json(self, next_page_token: Mapping[str, Any] = None, **kwargs) -> Dict:
+        if next_page_token:
+            return {"tenant_id": self.dolead_dds_id, "page": str(next_page_token)}
+        else:
+            return {"tenant_id": self.dolead_dds_id, "page": "1"}
+
+
+class DoleadPrePayments(XeroPaginatedData):
+    def path(self, **kwargs) -> str:
+        return "/xero/prepayments"
+
+    def request_body_json(self, next_page_token: Mapping[str, Any] = None, **kwargs) -> Dict:
+        if next_page_token:
+            return {"tenant_id": self.dolead_id, "page": str(next_page_token)}
+        else:
+            return {"tenant_id": self.dolead_id, "page": "1"}
+
+
+class DoleadIncPrePayments(DoleadPrePayments):
+    def request_body_json(self, next_page_token: Mapping[str, Any] = None, **kwargs) -> Dict:
+        if next_page_token:
+            return {"tenant_id": self.dolead_inc_id, "page": str(next_page_token)}
+        else:
+            return {"tenant_id": self.dolead_inc_id, "page": "1"}
+
+
+class DoleadUkPrePayments(DoleadPrePayments):
+    def request_body_json(self, next_page_token: Mapping[str, Any] = None, **kwargs) -> Dict:
+        if next_page_token:
+            return {"tenant_id": self.dolead_uk_id, "page": str(next_page_token)}
+        else:
+            return {"tenant_id": self.dolead_uk_id, "page": "1"}
+
+
+class DoleadDdsPrePayments(DoleadPrePayments):
+    def request_body_json(self, next_page_token: Mapping[str, Any] = None, **kwargs) -> Dict:
+        if next_page_token:
+            return {"tenant_id": self.dolead_dds_id, "page": str(next_page_token)}
+        else:
+            return {"tenant_id": self.dolead_dds_id, "page": "1"}
+
+
+class DoleadOverPayments(XeroPaginatedData):
+    def path(self, **kwargs) -> str:
+        return "/xero/overpayments"
+
+    def request_body_json(self, next_page_token: Mapping[str, Any] = None, **kwargs) -> Dict:
+        if next_page_token:
+            return {"tenant_id": self.dolead_id, "page": str(next_page_token)}
+        else:
+            return {"tenant_id": self.dolead_id, "page": "1"}
+
+
+class DoleadIncOverPayments(DoleadOverPayments):
+    def request_body_json(self, next_page_token: Mapping[str, Any] = None, **kwargs) -> Dict:
+        if next_page_token:
+            return {"tenant_id": self.dolead_inc_id, "page": str(next_page_token)}
+        else:
+            return {"tenant_id": self.dolead_inc_id, "page": "1"}
+
+
+class DoleadUkOverPayments(DoleadOverPayments):
+    def request_body_json(self, next_page_token: Mapping[str, Any] = None, **kwargs) -> Dict:
+        if next_page_token:
+            return {"tenant_id": self.dolead_uk_id, "page": str(next_page_token)}
+        else:
+            return {"tenant_id": self.dolead_uk_id, "page": "1"}
+
+
+class DoleadDdsOverPayments(DoleadOverPayments):
+    def request_body_json(self, next_page_token: Mapping[str, Any] = None, **kwargs) -> Dict:
+        if next_page_token:
+            return {"tenant_id": self.dolead_dds_id, "page": str(next_page_token)}
+        else:
+            return {"tenant_id": self.dolead_dds_id, "page": "1"}
+
+
+class DoleadBankTransfers(XeroPaginatedData):
+    def path(self, **kwargs) -> str:
+        return "/xero/banktransfers"
+
+    def request_body_json(self, next_page_token: Mapping[str, Any] = None, **kwargs) -> Dict:
+        if next_page_token:
+            return {"tenant_id": self.dolead_id, "page": str(next_page_token)}
+        else:
+            return {"tenant_id": self.dolead_id, "page": "1"}
+
+
+class DoleadIncBankTransfers(DoleadBankTransfers):
+    def request_body_json(self, next_page_token: Mapping[str, Any] = None, **kwargs) -> Dict:
+        if next_page_token:
+            return {"tenant_id": self.dolead_inc_id, "page": str(next_page_token)}
+        else:
+            return {"tenant_id": self.dolead_inc_id, "page": "1"}
+
+
+class DoleadUkBankTransfers(DoleadBankTransfers):
+    def request_body_json(self, next_page_token: Mapping[str, Any] = None, **kwargs) -> Dict:
+        if next_page_token:
+            return {"tenant_id": self.dolead_uk_id, "page": str(next_page_token)}
+        else:
+            return {"tenant_id": self.dolead_uk_id, "page": "1"}
+
+
+class DoleadDdsBankTransfers(DoleadBankTransfers):
+    def request_body_json(self, next_page_token: Mapping[str, Any] = None, **kwargs) -> Dict:
+        if next_page_token:
+            return {"tenant_id": self.dolead_dds_id, "page": str(next_page_token)}
+        else:
+            return {"tenant_id": self.dolead_dds_id, "page": "1"}
+
+
 class Tenants(XeroHttpStream):
     url_base = "http://acore01.prod.dld/"
     headers = {"Dolead-Current-User": "1", "Dolead-User": "1", "User-Agent": "dolead_client/billing"}
