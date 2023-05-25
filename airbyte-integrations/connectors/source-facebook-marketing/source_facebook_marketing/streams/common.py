@@ -38,7 +38,7 @@ def retry_pattern(backoff_type, exception, **wait_gen_kwargs):
         if (
                 details.get("kwargs", {}).get("params", {}).get("limit")
         ):
-            details["kwargs"]["params"]["limit"] = int(int(details["kwargs"]["params"]["limit"]) / 4)
+            details["kwargs"]["params"]["limit"] = int(int(details["kwargs"]["params"]["limit"]) / 2)
 
     def should_retry_api_error(exc):
         if isinstance(exc, FacebookRequestError):
