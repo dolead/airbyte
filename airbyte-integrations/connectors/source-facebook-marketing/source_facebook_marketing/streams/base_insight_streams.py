@@ -125,6 +125,7 @@ class AdsInsights(FBMarketingIncrementalStream):
         job = stream_slice["insight_job"]
         try:
             for obj in job.get_result():
+                docs.append(obj.export_all_data())
                 yield obj.export_all_data()
         except FacebookBadObjectError as e:
             raise AirbyteTracedException(
@@ -135,6 +136,11 @@ class AdsInsights(FBMarketingIncrementalStream):
         except FacebookRequestError as exc:
             raise traced_exception(exc)
 
+        with open("test_results_master_version.txt", "a") as file:
+            file.write("{} documents were exported for account id {} and date {} \n".format(
+                len(docs),
+                job._edge_object.get("account_id"),
+                job.interval.start))
         logger.info("{} documents were exported for account id {}".format(len(docs), job._edge_object.get("account_id")))
         self._completed_slices.add(job.interval.start)
         if job.interval.start == self._next_cursor_value:
