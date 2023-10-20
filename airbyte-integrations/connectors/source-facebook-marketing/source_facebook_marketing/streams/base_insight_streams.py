@@ -1,7 +1,7 @@
 #
 # Copyright (c) 2022 Airbyte, Inc., all rights reserved.
 #
-
+import datetime
 import logging
 from typing import Any, Iterable, Iterator, List, Mapping, MutableMapping, Optional, Union
 
@@ -121,6 +121,7 @@ class AdsInsights(FBMarketingIncrementalStream):
         stream_state: Mapping[str, Any] = None,
     ) -> Iterable[Mapping[str, Any]]:
         """Waits for current job to finish (slice) and yield its result"""
+        time_start: datetime = datetime.datetime.now()
         docs = []
         job = stream_slice["insight_job"]
         try:
@@ -136,12 +137,16 @@ class AdsInsights(FBMarketingIncrementalStream):
         except FacebookRequestError as exc:
             raise traced_exception(exc)
 
+        time_end: datetime = datetime.datetime.now()
+        time = time_end - time_start
+
         with open("test_results_master_version.txt", "a") as file:
-            file.write("{} documents were exported for account id {} and date {} \n".format(
+            file.write("{} documents were exported for account id {} and date {}. The sync took {} \n".format(
                 len(docs),
                 job._edge_object.get("account_id"),
-                job.interval.start))
-        logger.info("{} documents were exported for account id {}".format(len(docs), job._edge_object.get("account_id")))
+                job.interval.start,
+                time))
+
         self._completed_slices.add(job.interval.start)
         if job.interval.start == self._next_cursor_value:
             self._advance_cursor()
