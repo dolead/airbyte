@@ -162,19 +162,23 @@ class FBMarketingIncrementalStream(FBMarketingStream, ABC):
         """Update stream state from latest record"""
         potentially_new_records_in_the_past = self._include_deleted and not current_stream_state.get("include_deleted", False)
         record_value = latest_record[self.cursor_field]
-        state_value = current_stream_state.get(account_id, {}).get(self.cursor_field) or record_value
+
+        partition_value = latest_record[self.partition_field] if self.partition_field in latest_record else None
+        _current_stream_state = current_stream_state.get(partition_value, current_stream_state)
+
+        state_value = _current_stream_state.get(self.cursor_field) or record_value
         max_cursor = max(pendulum.parse(state_value), pendulum.parse(record_value))
         if potentially_new_records_in_the_past:
             max_cursor = record_value
 
-        updated_state = deep_merge(current_stream_state, {
-            account_id: {
-                self.cursor_field: str(max_cursor),
-                "include_deleted": self._include_deleted,
-            }
-        })
+        updated_state = {
+            self.cursor_field: str(max_cursor),
+            "include_deleted": self._include_deleted,
+        }
+        partitionned_current_stream_state = {partition_value: updated_state} if partition_value else updated_state
+        result = deep_merge(current_stream_state, partitionned_current_stream_state)
 
-        return updated_state
+        return result
 
     def request_params(self, stream_slice: dict, stream_state: Mapping[str, Any], **kwargs) -> MutableMapping[str, Any]:
         """Include state filter"""

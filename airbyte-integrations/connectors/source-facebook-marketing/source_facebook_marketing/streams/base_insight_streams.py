@@ -340,10 +340,6 @@ class AdsInsights(FBMarketingIncrementalStream):
             "action_attribution_windows": self.action_attribution_windows,
         }
 
-    def _state_filter(self, stream_slice: dict, stream_state: Mapping[str, Any]) -> Mapping[str, Any]:
-        """Works differently for insights, so remove it"""
-        return {}
-
     def get_json_schema(self) -> Mapping[str, Any]:
         """Add fields from breakdowns to the stream schema
         :return: A dict of the JSON schema representing this stream.
