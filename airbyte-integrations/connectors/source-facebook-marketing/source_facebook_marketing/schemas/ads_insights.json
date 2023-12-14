@@ -280,7 +280,7 @@
       "$ref": "ads_action_stats.json"
     },
     "updated_time": {
-      "format": "timestamp",
+      "format": "date",
       "type": ["null", "string"]
     },
     "video_15_sec_watched_actions": {

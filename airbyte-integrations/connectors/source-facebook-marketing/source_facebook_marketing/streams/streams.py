@@ -216,9 +216,11 @@ class AdAccount(FBMarketingStream):
 
     def list_objects(self, stream_slice: dict, params: Mapping[str, Any]) -> Iterable:
         """noop in case of AdAccount"""
-        # return [FBAdAccount(self._api.account.get_id()).api_get(fields=self.fields)]
         account = stream_slice.get("account")
-        yield account
+        check = FBAdAccount(account.get("id")).api_get(fields=self.fields)
+        yield check
+        # account = stream_slice.get("account")
+        # yield account
 
 
 class Images(FBMarketingReversedIncrementalStream):

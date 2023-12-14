@@ -486,12 +486,6 @@
         "optimization_type": {
           "type": "string"
         },
-        "reasons_to_shop": {
-          "type": ["null", "boolean"]
-        },
-        "shops_bundle": {
-          "type": ["null", "boolean"]
-        },
         "titles": {
           "type": ["null", "array"],
           "items": {
