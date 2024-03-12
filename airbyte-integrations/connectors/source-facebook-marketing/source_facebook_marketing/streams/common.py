@@ -45,6 +45,8 @@ def retry_pattern(backoff_type, exception, **wait_gen_kwargs):
         code = exc._error.get("code")
         if code == 1 and tries >= 4:
             switch_cursor(details)
+        elif "Cannot include" in exc.api_error_message() or ("Object with ID" and "does not exist" in exc.api_error_message()):
+            return None
         else:
             reduce_request_record_limit(details)
 
@@ -93,6 +95,8 @@ def retry_pattern(backoff_type, exception, **wait_gen_kwargs):
             unknown_error = exc.api_error_subcode() == FACEBOOK_UNKNOWN_ERROR_CODE
             connection_reset_error = exc.api_error_code() == FACEBOOK_CONNECTION_RESET_ERROR_CODE
             server_error = exc.http_status() == http.client.INTERNAL_SERVER_ERROR
+            missing_act_id = "Cannot include" in exc.api_error_message() or \
+                             ("Object with ID" and "does not exist" in exc.api_error_message())
             return any(
                 (
                     exc.api_transient_error(),
@@ -102,6 +106,7 @@ def retry_pattern(backoff_type, exception, **wait_gen_kwargs):
                     connection_reset_error,
                     temporary_oauth_error,
                     server_error,
+                    missing_act_id
                 )
             )
         return True

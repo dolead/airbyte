@@ -1,12 +1,15 @@
 #
 # Copyright (c) 2023 Airbyte, Inc., all rights reserved.
 #
+import json
 
 import pendulum
 import pytest
 import source_facebook_marketing
 from facebook_business import FacebookAdsApi, FacebookSession
 from facebook_business.adobjects.adaccount import AdAccount
+
+from source_facebook_marketing.api import API, MyFacebookAdsApi
 
 FB_API_VERSION = FacebookAdsApi.API_VERSION
 
@@ -139,3 +142,17 @@ class TestMyFacebookAdsApi:
         account = api._find_account(account_id)
         assert isinstance(account, AdAccount)
         assert account.get_id() == "act_test"
+
+    def test_call_api(self):
+        with open("../secrets/config.json") as file:
+            config = json.loads(file.read())
+
+        access_token = config["access_token"]
+        google_service_account = config["google_service_account"]
+        account_id = config["account_id"]
+        fb_session = FacebookSession(access_token=access_token)
+        api = MyFacebookAdsApi(fb_session)
+        resp = api.call(method="POST",
+                 path="https://graph.facebook.com/v17.0/"+account_id+"/insights?access_token=" + access_token)
+
+        resp
